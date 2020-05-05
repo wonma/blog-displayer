@@ -8,19 +8,23 @@ class UserName extends React.Component {
     }
     
     render() {
+        const { user } = this.props;
+        if (!user) { 
+            return null; 
+        }
 
         return (
             <div>
-                <h3>{this.props.user}</h3>
+                <h3>{this.props.user.name}</h3>
             </div>
         );
     }
 }
 
-const mapStateToProps = state => {
-    console.log(state.user);
-
-    return { user: state.user };
+const mapStateToProps = (state, ownProps) => {
+    const user = state.users.find((user) => {
+        return user.id === ownProps.userId});
+    return { user };
 }
 
 export default connect(mapStateToProps, { fetchUser })(UserName);
